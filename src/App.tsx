@@ -9,6 +9,7 @@ import {
   USER_ID,
   updateTodo,
 } from './api/todos';
+import { NotificationType } from './types/NotificationType';
 import { Todo } from './types/Todo';
 import { Status } from './types/Status';
 import { Filter } from './components/Filter/Filter';
@@ -59,13 +60,13 @@ export const App: React.FC = () => {
       .then(todosResponse => {
         // setTodos(todos);
         if (todosResponse.length === 0) {
-          handleErrorMessage('Unable to load todos');
+          handleErrorMessage(NotificationType.LOAD_TODOS);
         }
 
         visibleTodos(todosResponse);
       })
       .catch(err => {
-        handleErrorMessage('Unable to load todos');
+        handleErrorMessage(NotificationType.LOAD_TODOS);
 
         throw err;
       });
@@ -96,7 +97,7 @@ export const App: React.FC = () => {
         });
       })
       .catch(err => {
-        handleErrorMessage('Unable to add a todo');
+        handleErrorMessage(NotificationType.ADD_TODO);
         inputRef?.current?.focus();
         throw err;
       })
@@ -119,7 +120,7 @@ export const App: React.FC = () => {
         );
       })
       .catch(err => {
-        handleErrorMessage('Unable to update a todo');
+        handleErrorMessage(NotificationType.UPDATE_TODO);
         throw err;
       })
       .finally(() => {
@@ -144,7 +145,7 @@ export const App: React.FC = () => {
           );
         })
         .catch(err => {
-          handleErrorMessage('Unable to delete a todo');
+          handleErrorMessage(NotificationType.DELETE_TODO);
 
           throw err;
         }),
@@ -173,7 +174,7 @@ export const App: React.FC = () => {
       })
       .catch(err => {
         setTodos(todos);
-        handleErrorMessage('Unable to delete a todo');
+        handleErrorMessage(NotificationType.DELETE_TODO);
         throw err;
       })
       .finally(() => {
@@ -284,16 +285,16 @@ export const App: React.FC = () => {
             </div>
           </div> */}
         {/* </section> */}
-      </div>
 
-      {todos.length !== 0 && (
-        <Filter
-          todos={todos}
-          status={status}
-          setStatus={setStatus}
-          onClearCompleted={handleClearCompleted}
-        />
-      )}
+        {todos.length !== 0 && (
+          <Filter
+            todos={todos}
+            status={status}
+            setStatus={setStatus}
+            onClearCompleted={handleClearCompleted}
+          />
+        )}
+      </div>
 
       {/* DON'T use conditional rendering to hide the notification */}
       {/* Add the 'hidden' class to hide the message smoothly */}

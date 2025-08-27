@@ -1,4 +1,5 @@
 import { Todo } from '../../types/Todo';
+import { NotificationType } from '../../types/NotificationType';
 import { useEffect, useState } from 'react';
 
 type HeaderProps = {
@@ -39,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
     const trimmedTitle = newTodoTitle.trim(); // Remove trailing spaces only on submit
 
     if (trimmedTitle.length === 0) {
-      setError('Title should not be empty');
+      setError(NotificationType.TITLE);
 
       return;
     }
